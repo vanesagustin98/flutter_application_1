@@ -58,7 +58,47 @@ Widget campoUsuario(){
             borderSide: BorderSide(
               style: BorderStyle.none),
         ),
+        hintText: "Nombre",
+        prefixIcon: Icon(Icons.account_circle,color: Colors.black87),
+        // fillColor: Color.fromARGB(214, 214, 214, 214),
+        filled: true
+      ),
+    ),
+  );
+}
+Widget campoNombre(){
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    child: const TextField(
+      decoration: InputDecoration(
+        focusedBorder: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: 
+            BorderRadius.all(Radius.circular(20)),
+            borderSide: BorderSide(
+              style: BorderStyle.none),
+        ),
         hintText: "Usuario",
+        prefixIcon: Icon(Icons.account_circle,color: Colors.black87),
+        // fillColor: Color.fromARGB(214, 214, 214, 214),
+        filled: true
+      ),
+    ),
+  );
+}
+Widget campoId(){
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    child: const TextField(
+      decoration: InputDecoration(
+        focusedBorder: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: 
+            BorderRadius.all(Radius.circular(20)),
+            borderSide: BorderSide(
+              style: BorderStyle.none),
+        ),
+        hintText: "Identificación",
         prefixIcon: Icon(Icons.account_circle,color: Colors.black87),
         // fillColor: Color.fromARGB(214, 214, 214, 214),
         filled: true
@@ -87,6 +127,27 @@ Widget campoContrasena(){
     ),
   );
 }
+Widget campoContrasenaconfirmar(){
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    child: const TextField(
+      obscureText: true,
+      decoration: InputDecoration(
+        focusedBorder: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: 
+            BorderRadius.all(Radius.circular(20)),
+            borderSide: BorderSide(
+              style: BorderStyle.none),
+        ),
+        hintText: "Confirmar contraseña",
+        prefixIcon: Icon(Icons.password,color: Colors.black87),
+        // fillColor: Color.fromARGB(214, 214, 214, 214),
+        filled: true
+      ),
+    ),
+  );
+}
 
 Widget registrarse(){
   return Container(
@@ -94,9 +155,10 @@ Widget registrarse(){
     child: Column(children: [
       const Text("Registrate!", style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
       campoUsuario(),
-      campoUsuario(),
+      campoNombre(),
+      campoId(),
       campoContrasena(),
-      campoContrasena()
+      campoContrasenaconfirmar()
     ],),
     // decoration: BoxDecoration(border: Border.all(color: Color.fromARGB(255, 255, 161, 21))),
     

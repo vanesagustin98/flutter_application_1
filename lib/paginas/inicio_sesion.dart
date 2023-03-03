@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Utils/LoginUtil.dart';
+import 'package:flutter_application_1/paginas/home.dart';
 import 'package:flutter_application_1/paginas/registro.dart';
+import 'dart:developer' as developer;
 
 // ignore: camel_case_types
 class inicio_sesion extends StatefulWidget {
@@ -27,15 +30,9 @@ class _inicio_sesionState extends State<inicio_sesion> {
               child: const Image(image: NetworkImage("https://previews.123rf.com/images/creativika/creativika1605/creativika160500078/57318436-fondo-abstracto-con-c%C3%ADrculos-naranjas-ilustraci%C3%B3n-vectorial.jpg")),
             ),
             sesion(),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.8,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () { },
-                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 255, 161, 21),textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
-                child: const Text("Iniciar Sesión") 
-                ),
-            ),
+            boton_sesion(context),
+            const SizedBox(height: 10),
+            boton_sesion_google(context),
             cuenta_existente(context),
           ],
         ),
@@ -120,5 +117,63 @@ Widget cuenta_existente(context){
                   MaterialPageRoute(builder: (context)=>const registro())
                 )}, child: const Text("Registrate"))
     ],
+  );
+}
+
+// ignore: non_constant_identifier_names
+Widget boton_sesion(context){
+  return SizedBox(
+    width: MediaQuery.of(context).size.width*0.8,
+    height: 50,
+    child: ElevatedButton(
+      onPressed: () {Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context)=>const Home())
+      ); },
+      style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 255, 161, 21),textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
+      child: const Text("Iniciar Sesión") 
+      ),
+  );
+}
+
+// ignore: non_constant_identifier_names
+Widget boton_sesion_google(context){
+  return SizedBox(
+    width: MediaQuery.of(context).size.width*0.8,
+    height: 50,
+    child: 
+      ElevatedButton(
+        onPressed: () {
+          LoginUtil().signInWithGoogle().then((user) {
+            //a pulir!!!
+            if (user != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const Home();
+                  },
+                ),
+              );
+            } else {
+              developer.log("loginScreen-build()ERROR user viene nulo");
+              // developer.log(user as String);
+            }
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
+        child: const Row(children: [
+          Image(image: NetworkImage("https://lh3.googleusercontent.com/StND2cg3sSbR6l-AHr3VdxKziIhEP4kYHQiTppD-aKc6gwn7PVdht1YqzjWSmwf5JLWf=w200-rwa"),
+          height: 40,
+          width: 40),
+          SizedBox(width: 10,),
+          Text("Iniciar Sesión con Google")
+        ]) 
+        
+      ),
+      
+      
   );
 }
