@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/paginas/inicio_sesion.dart';
-import 'package:flutter_application_1/paginas/registro.dart';
+import 'package:flutter_application_1/paginas/home.dart';
+import 'dart:developer' as developer;
+
+import 'Utils/LoginUtil.dart';
 
 void main() => runApp(const MiApp());
 
@@ -28,6 +30,7 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
     final Future<FirebaseApp>_inicio_firebase = Firebase.initializeApp();
     return Scaffold(
       // appBar: AppBar(),
@@ -46,40 +49,15 @@ class _InicioState extends State<Inicio> {
               ),
               Container(
                 // width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 60),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
                 child: const Image(image: NetworkImage("https://es.pov21.com/wp-content/uploads/2020/04/Qu%C3%A9-aprend%C3%AD-de-las-personas.jpeg")),
                 // child: Image(image: FileImage(File("D:\\Documentos\\Cualquier cosa\\System\\WhatsApp Image 2020-12-14 at 15.36.05.jpeg"))),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width*0.8,
-                child: ElevatedButton(
-                  onPressed: () =>{
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=>const registro())
-                    )
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 255, 161, 21), textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
-                  child: const Text("Únete a nuestra comunidad") 
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width*0.8,
-                child: ElevatedButton(
-                  onPressed: () =>{
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=>const inicio_sesion())
-                    )
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 255, 161, 21),textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
-                  child: const Text("Inicia Sesión") 
-                  ),
-              ),
+              boton_sesion_google(context),
+              const SizedBox(height: 10),
+              boton_sesion_facebook(context),
               // ignore: prefer_const_constructors
-              SizedBox(
-                height: 50,
-              ),
+              SizedBox(height: 30),
               Container(
                 height: 200,
                 alignment: Alignment.bottomRight,
@@ -92,5 +70,84 @@ class _InicioState extends State<Inicio> {
     );
   }
 }
+
+// ignore: non_constant_identifier_names
+Widget boton_sesion_google(context){
+  return SizedBox(
+    width: MediaQuery.of(context).size.width*0.8,
+    height: 50,
+    child: 
+      ElevatedButton(
+        onPressed: () {
+          LoginUtil().signInWithGoogle().then((user) {
+            //a pulir!!!
+            if (user != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const Home();
+                  },
+                ),
+              );
+            } else {
+              developer.log("loginScreen-build()ERROR user viene nulo");
+            }
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
+        child: const Row(children: [
+          Image(image: NetworkImage("https://lh3.googleusercontent.com/StND2cg3sSbR6l-AHr3VdxKziIhEP4kYHQiTppD-aKc6gwn7PVdht1YqzjWSmwf5JLWf=w200-rwa"),
+          height: 40,
+          width: 40),
+          SizedBox(width: 10,),
+          Text("Iniciar Sesión con Google")
+        ]) 
+        
+      ),
+      
+      
+  );
+}
+// ignore: non_constant_identifier_names
+Widget boton_sesion_facebook(context){
+  return SizedBox(
+    width: MediaQuery.of(context).size.width*0.8,
+    height: 50,
+    child: 
+      ElevatedButton(
+        onPressed: () {
+          LoginUtil().signInWithFacebook();
+          Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const Home();
+                  },
+                ),
+              );
+
+          
+
+        },
+        style: ElevatedButton.styleFrom(
+          foregroundColor: const Color.fromARGB(255, 53, 118, 202),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
+        child: const Row(children: [
+          Image(image: NetworkImage("https://cdn-icons-png.flaticon.com/512/124/124010.png"),
+          height: 40,
+          width: 40),
+          SizedBox(width: 10,),
+          Text("Iniciar Sesión con Facebook")
+        ]) 
+        
+      ),
+      
+      
+  );
+}
+
 
 

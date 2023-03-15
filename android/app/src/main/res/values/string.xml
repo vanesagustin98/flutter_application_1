@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Moviles</string>
+    <string name="facebook_app_id">686768993194004</string>
+    <string name="fb_login_protocol_scheme">fb686768993194004</string>
+    <string name="facebook_client_token">a2864e483ecf4aba9906d2c8c8f8947d</string>
+</resources>
