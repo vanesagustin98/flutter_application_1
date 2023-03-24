@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/paginas/home.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:developer' as developer;
 
 import 'Utils/LoginUtil.dart';
@@ -29,11 +30,13 @@ class Inicio extends StatefulWidget {
 
 class _InicioState extends State<Inicio> {
   @override
+  Future<void> requestPermission() async { await Permission.location.request(); }
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
     final Future<FirebaseApp>_inicio_firebase = Firebase.initializeApp();
     return Scaffold(
       // appBar: AppBar(),
+      backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _inicio_firebase,
         builder: (context, snapshot) {
@@ -45,23 +48,23 @@ class _InicioState extends State<Inicio> {
               Container(
                 height: 200,
                 alignment: Alignment.topLeft,
-                child: const Image(image: NetworkImage("https://previews.123rf.com/images/creativika/creativika1605/creativika160500078/57318436-fondo-abstracto-con-c%C3%ADrculos-naranjas-ilustraci%C3%B3n-vectorial.jpg")),
+                child: const Image(image: NetworkImage("https://img.freepik.com/vector-premium/forma-circulo-lineas-circulo-naranja-circulo-transparente-circulos-onda-abstractos-marco-circulo_206325-1022.jpg?w=2000")),
               ),
-              Container(
-                // width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
-                child: const Image(image: NetworkImage("https://es.pov21.com/wp-content/uploads/2020/04/Qu%C3%A9-aprend%C3%AD-de-las-personas.jpeg")),
-                // child: Image(image: FileImage(File("D:\\Documentos\\Cualquier cosa\\System\\WhatsApp Image 2020-12-14 at 15.36.05.jpeg"))),
-              ),
+              const Image(image: AssetImage("assets/img3.png",),height: 230,),
               boton_sesion_google(context),
               const SizedBox(height: 10),
               boton_sesion_facebook(context),
               // ignore: prefer_const_constructors
               SizedBox(height: 30),
-              Container(
+              const SizedBox(
                 height: 200,
-                alignment: Alignment.bottomRight,
-                child: const Image(image: NetworkImage("https://previews.123rf.com/images/creativika/creativika1605/creativika160500078/57318436-fondo-abstracto-con-c%C3%ADrculos-naranjas-ilustraci%C3%B3n-vectorial.jpg")),
+                child: Row(
+                  children: [
+                    Image(image: NetworkImage("https://i.pinimg.com/736x/e7/38/57/e73857e952350e82257efa01e59c849f.jpg"), alignment: Alignment.bottomLeft,width: 90),
+                    Image(image: NetworkImage("https://i.pinimg.com/736x/e7/38/57/e73857e952350e82257efa01e59c849f.jpg"), alignment: Alignment.bottomCenter),
+                    Image(image: NetworkImage("https://i.pinimg.com/736x/e7/38/57/e73857e952350e82257efa01e59c849f.jpg"), alignment: Alignment.bottomRight,width: 90),
+                  ],
+                ),
               )
             ],
           );
